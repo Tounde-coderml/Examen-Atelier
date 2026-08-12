@@ -14,8 +14,12 @@ class Categorie extends Model
     protected $fillable = [
             
     
-        'name',
-        'description'
+        'name'=>['required', 'string', 'max:100' ],
+        'description'=>['required', 'string', 'max:100' ],
+        
+        
     ];
+
+
 
 }
