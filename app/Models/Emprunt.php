@@ -17,7 +17,8 @@ class Emprunt extends Model
             'materiel',
             'Date_emprunt',
             'Date_prevue_de_retour',
-            'Date_effective_de_retour'
+            'Date_effective_de_retour',
+            'statut',
     ];
 
 }
