@@ -16,7 +16,8 @@ class Material extends Model
                'nom',
                'description',
                'numero_de_serie',
-               'quantite_disponible'
+               'quantite_disponible',
+               'etats'
             
     ];
 
