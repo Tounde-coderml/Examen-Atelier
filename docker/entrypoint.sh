@@ -1,28 +1,27 @@
 #!/bin/sh
 set -e
 
-echo "Starting Laravel backend..."
+echo "Démarrage du backend Laravel..."
 
-# Copier .env.docker comme .env s'il n'existe pas
 if [ ! -f /app/.env ]; then
   cp /app/.env.docker /app/.env
-  echo "Copied .env.docker to .env"
+  echo ".env.docker copié vers .env"
 fi
 
-# Attendre que MySQL soit prêt
-echo "Waiting for MySQL to be ready..."
+
+php artisan key:generate --force
+
+
+echo "En attente de MySQL..."
 until nc -z mysql 3306 2>/dev/null; do
-  echo "MySQL is unavailable - sleeping"
+  echo "MySQL indisponible - nouvelle tentative dans 1s"
   sleep 1
 done
 
-echo "MySQL is up and running"
+echo "MySQL est prêt"
 
-# Exécuter les migrations
-echo "Running migrations..."
+echo "Exécution des migrations..."
 php artisan migrate:fresh --seed --force
 
-echo "Backend is ready!"
-
-# Démarrer le serveur Laravel
+echo "Backend prêt !"
 php artisan serve --host=0.0.0.0 --port=8000
