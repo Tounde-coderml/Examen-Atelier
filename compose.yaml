@@ -19,7 +19,7 @@ services:
       - atelier_network
 
   backend:
-    image: TON_PSEUDO_DOCKERHUB/atelier-backend:latest
+    image: lerichebsb/atelier-backend:latest
     container_name: atelier_backend
     environment:
       DB_CONNECTION: mysql
@@ -39,7 +39,7 @@ services:
       - atelier_network
 
   frontend:
-    image: TON_PSEUDO_DOCKERHUB/atelier-frontend:latest
+    image: lerichebsb/atelier-frontend:latest
     container_name: atelier_frontend
     environment:
       VITE_API_URL: http://localhost:8000/api
