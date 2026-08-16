@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: atelier_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_DATABASE: ${DB_DATABASE:-Examen_atelier}
+      MYSQL_USER: ${DB_USERNAME:-atelier}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - atelier_network
+
+  backend:
+    image: TON_PSEUDO_DOCKERHUB/atelier-backend:latest
+    container_name: atelier_backend
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-Examen_atelier}
+      DB_USERNAME: ${DB_USERNAME:-atelier}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      APP_URL: http://localhost:8000
+      APP_DEBUG: false
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    networks:
+      - atelier_network
+
+  frontend:
+    image: TON_PSEUDO_DOCKERHUB/atelier-frontend:latest
+    container_name: atelier_frontend
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - atelier_network
+
+volumes:
+  mysql_data:
+
+networks:
+  atelier_network:
+    driver: bridge
