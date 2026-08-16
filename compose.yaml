@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:8.0
     container_name: atelier_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
-      MYSQL_DATABASE: ${DB_DATABASE:-Examen_atelier}
-      MYSQL_USER: ${DB_USERNAME:-atelier}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: Examen_atelier
+      MYSQL_USER: atelier
+      MYSQL_PASSWORD: password
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -25,9 +23,9 @@ services:
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_DATABASE: ${DB_DATABASE:-Examen_atelier}
-      DB_USERNAME: ${DB_USERNAME:-atelier}
-      DB_PASSWORD: ${DB_PASSWORD:-password}
+      DB_DATABASE: Examen_atelier
+      DB_USERNAME: atelier
+      DB_PASSWORD: password
       APP_URL: http://localhost:8000
       APP_DEBUG: false
     depends_on:
