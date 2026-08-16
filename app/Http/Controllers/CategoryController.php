@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
 use App\Models\Categorie;
-use Illuminate\Http\Request;
 
 class CategorieController extends Controller
 {
@@ -32,7 +31,7 @@ class CategorieController extends Controller
 
         return response()->json([
             'message' => 'Catégorie créée avec succès',
-            'data' => $categorie
+            'data' => $categorie,
         ], 201);
     }
 
@@ -43,7 +42,7 @@ class CategorieController extends Controller
     {
         //
         return response()->json([
-            'data' => $categorie
+            'data' => $categorie,
         ]);
     }
 
@@ -59,7 +58,7 @@ class CategorieController extends Controller
 
         return response()->json([
             'message' => 'Catégorie mise à jour avec succès',
-            'data' => $categorie->fresh()
+            'data' => $categorie->fresh(),
         ]);
     }
 
@@ -72,7 +71,7 @@ class CategorieController extends Controller
         $categorie->delete();
 
         return response()->json([
-            'message' => 'Catégorie supprimée avec succès'
+            'message' => 'Catégorie supprimée avec succès',
         ]);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMaterialRequest;
-use App\Http\Requests\UpdateMaterialRequest;
+use App\Http\Requests\StoreMaterielRequest;
+use App\Http\Requests\UpdateMaterielRequest;
 use App\Http\Resources\MaterialResource;
 use App\Models\Material;
 use Illuminate\Http\Request;
@@ -23,14 +23,14 @@ class MaterialApiController extends Controller
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
-                $q->where('nom', 'like', '%' . $search . '%')
-                  ->orWhere('numero_de_serie', 'like', '%' . $search . '%');
+                $q->where('nom', 'like', '%'.$search.'%')
+                    ->orWhere('numero_de_serie', 'like', '%'.$search.'%');
             });
         }
 
         // Filtrage par catégorie
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
         }
 
         // Pagination
@@ -45,7 +45,7 @@ class MaterialApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMaterialRequest $request)
+    public function store(StoreMaterielRequest $request)
     {
         $data = $request->validated();
 
@@ -53,7 +53,7 @@ class MaterialApiController extends Controller
 
         $data = [
             'message' => 'Matériel créé avec succès',
-            'data' => new MaterialResource($material)
+            'data' => new MaterialResource($material),
         ];
 
         return response()->json($data, 201);
@@ -62,9 +62,9 @@ class MaterialApiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Material $material)
+    public function show(Material $materiel)
     {
-        $data = new MaterialResource($material);
+        $data = new MaterialResource($materiel);
 
         return response()->json($data);
     }
@@ -73,14 +73,14 @@ class MaterialApiController extends Controller
      * Update the specified resource in storage.
      */
     public function update(
-        UpdateMaterialRequest $request,
-        Material $material
+        UpdateMaterielRequest $request,
+        Material $materiel
     ) {
-        $material->update($request->validated());
+        $materiel->update($request->validated());
 
         $data = [
             'message' => 'Matériel mis à jour avec succès',
-            'data' => new MaterialResource($material->fresh())
+            'data' => new MaterialResource($materiel->fresh()),
         ];
 
         return response()->json($data);
@@ -89,12 +89,12 @@ class MaterialApiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Material $material)
+    public function destroy(Material $materiel)
     {
-        $material->delete();
+        $materiel->delete();
 
         $data = [
-            'message' => 'Matériel supprimé avec succès'
+            'message' => 'Matériel supprimé avec succès',
         ];
 
         return response()->json($data);

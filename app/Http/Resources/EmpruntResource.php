@@ -15,16 +15,15 @@ class EmpruntResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
-            'utilisateur'=>$this->utilisateur,
-            'materiel'=>$this->materiel,
-            'Date_emprunt'=>$this->Date_emprunt,
-            'Date_prevue_de_retour'=>$this->Date_prevue_de_retour,
-            'Date_effective_de_retour'=>$this->Date_effective_de_retour,
-            'statut'=>$this->statut,
-            'created_at'=>$this->created_at,
-            'updated_at'=>$this->updated_at
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'material_id' => $this->material_id,
+            'Date_emprunt' => $this->Date_emprunt,
+            'Date_prevue_de_retour' => $this->Date_prevue_de_retour,
+            'Date_effective_de_retour' => $this->Date_effective_de_retour,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
-

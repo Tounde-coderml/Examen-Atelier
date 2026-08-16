@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmpruntRequest;
 use App\Http\Requests\UpdateEmpruntRequest;
 use App\Models\Emprunt;
-use Illuminate\Http\Request;
 
 class EmpruntController extends Controller
 {
@@ -34,7 +33,7 @@ class EmpruntController extends Controller
 
         return response()->json([
             'message' => 'Emprunt créé avec succès',
-            'data' => $emprunt
+            'data' => $emprunt,
         ], 201);
     }
 
@@ -45,7 +44,7 @@ class EmpruntController extends Controller
     {
         //
         return response()->json([
-            'data' => $emprunt
+            'data' => $emprunt,
         ]);
     }
 
@@ -61,7 +60,7 @@ class EmpruntController extends Controller
 
         return response()->json([
             'message' => 'Emprunt mis à jour avec succès',
-            'data' => $emprunt->fresh()
+            'data' => $emprunt->fresh(),
         ]);
     }
 
@@ -74,7 +73,7 @@ class EmpruntController extends Controller
         $emprunt->delete();
 
         return response()->json([
-            'message' => 'Emprunt supprimé avec succès'
+            'message' => 'Emprunt supprimé avec succès',
         ]);
     }
 }

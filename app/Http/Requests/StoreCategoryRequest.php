@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -17,7 +16,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100', 'unique:categories,name'],
+            'nom' => ['required', 'string', 'max:100', 'unique:categories,nom'],
             'description' => ['nullable', 'string', 'max:255'],
         ];
     }
@@ -25,10 +24,10 @@ class StoreCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Entrez votre nom',
-            'name.string' => 'Le nom doit être une chaîne de caractères',
-            'name.max' => 'Le nom ne doit pas dépasser 100 caractères',
-            'name.unique' => 'Cette catégorie existe déjà',
+            'nom.required' => 'Le nom de la catégorie est obligatoire.',
+            'nom.string' => 'Le nom de la catégorie doit être une chaîne de caractères.',
+            'nom.max' => 'Le nom de la catégorie ne doit pas dépasser 100 caractères.',
+            'nom.unique' => 'Cette catégorie existe déjà.',
             'description.string' => 'La description doit être une chaîne de caractères',
             'description.max' => 'La description ne doit pas dépasser 255 caractères',
         ];

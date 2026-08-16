@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Override;
 
 class LoginRequest extends FormRequest
 {
@@ -24,19 +23,18 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'=>['required', 'string'],
-            'password'=>['required', 'string']
+            'email' => ['required', 'string'],
+            'password' => ['required', 'string'],
 
         ];
     }
 
-   
-    public function messages():array
+    public function messages(): array
     {
         return [
-                 
-            'email.required'=>"l'email est obligatoire ",
-            'password.required'=>'le mot de passe est obligatoire'
+
+            'email.required' => "l'email est obligatoire ",
+            'password.required' => 'le mot de passe est obligatoire',
         ];
-}
+    }
 }

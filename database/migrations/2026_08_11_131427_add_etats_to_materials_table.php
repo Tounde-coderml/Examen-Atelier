@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('materials', function (Blueprint $table) {
             $table->string('etats')->default('Disponible');
-            
+
         });
     }
 
@@ -22,10 +22,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-      
-    Schema::table('materials', function (Blueprint $table) {
-        $table->dropColumn('etats');
-    });
+
+        Schema::table('materials', function (Blueprint $table) {
+            $table->dropColumn('etats');
+        });
 
     }
 };

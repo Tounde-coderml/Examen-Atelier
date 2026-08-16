@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategorieRequest;
-use App\Http\Requests\UpdateCategorieRequest;
-use App\Http\Resources\CategorieResource;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Categorie;
-use Illuminate\Http\Request;
 
-class CategorieApiController extends Controller
+class CategoryApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +18,13 @@ class CategorieApiController extends Controller
         //
         $categories = Categorie::query()->latest()->paginate(10);
 
-        return CategorieResource::collection($categories);
+        return CategoryResource::collection($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategorieRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         //
         $data = $request->validated();
@@ -34,7 +33,7 @@ class CategorieApiController extends Controller
 
         $data = [
             'message' => 'Catégorie créée avec succès',
-            'data' => new CategorieResource($categorie)
+            'data' => new CategoryResource($categorie),
         ];
 
         return response()->json($data, 201);
@@ -46,7 +45,7 @@ class CategorieApiController extends Controller
     public function show(Categorie $categorie)
     {
         //
-        $data = new CategorieResource($categorie);
+        $data = new CategoryResource($categorie);
 
         return response()->json($data);
     }
@@ -55,7 +54,7 @@ class CategorieApiController extends Controller
      * Update the specified resource in storage.
      */
     public function update(
-        UpdateCategorieRequest $request,
+        UpdateCategoryRequest $request,
         Categorie $categorie
     ) {
         //
@@ -63,7 +62,7 @@ class CategorieApiController extends Controller
 
         $data = [
             'message' => 'Catégorie mise à jour avec succès',
-            'data' => new CategorieResource($categorie->fresh())
+            'data' => new CategoryResource($categorie->fresh()),
         ];
 
         return response()->json($data);
@@ -78,7 +77,7 @@ class CategorieApiController extends Controller
         $categorie->delete();
 
         $data = [
-            'message' => 'Catégorie supprimée avec succès'
+            'message' => 'Catégorie supprimée avec succès',
         ];
 
         return response()->json($data);

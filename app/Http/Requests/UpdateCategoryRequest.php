@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\String\TruncateMode;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -13,7 +12,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true ;
+        return true;
     }
 
     /**
@@ -23,14 +22,13 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-      
-            return [
-            //
-            'name'=>['required', 'string', 'max:100' ],
-            'description'=>['required', 'string', 'max:255' ],
 
-            
+        return [
+            //
+            'nom' => ['required', 'string', 'max:100'],
+            'description' => ['required', 'string', 'max:255'],
+
         ];
-       
+
     }
 }

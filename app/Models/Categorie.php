@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Categorie extends Model
 {
     //
-    use HasFactory , HasUuids ;
+    use HasFactory , HasUuids;
 
     protected $fillable = [
-            
-    
-        'name'=>['required', 'string', 'max:100' ],
-        'description'=>['required', 'string', 'max:100' ],
-        
-        
+        'nom',
+        'description',
     ];
 
-
-
+    public function materials(): HasMany
+    {
+        return $this->hasMany(Material::class, 'category_id');
+    }
 }

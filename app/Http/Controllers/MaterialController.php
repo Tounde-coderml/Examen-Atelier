@@ -21,8 +21,8 @@ class MaterialController extends Controller
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
-                $q->where('nom', 'like', '%' . $search . '%')
-                  ->orWhere('numero_de_serie', 'like', '%' . $search . '%');
+                $q->where('nom', 'like', '%'.$search.'%')
+                    ->orWhere('numero_de_serie', 'like', '%'.$search.'%');
             });
         }
 
@@ -51,7 +51,7 @@ class MaterialController extends Controller
 
         return response()->json([
             'message' => 'Matériel créé avec succès',
-            'data' => $material
+            'data' => $material,
         ], 201);
     }
 
@@ -61,7 +61,7 @@ class MaterialController extends Controller
     public function show(Material $material)
     {
         return response()->json([
-            'data' => $material
+            'data' => $material,
         ]);
     }
 
@@ -76,7 +76,7 @@ class MaterialController extends Controller
 
         return response()->json([
             'message' => 'Matériel mis à jour avec succès',
-            'data' => $material->fresh()
+            'data' => $material->fresh(),
         ]);
     }
 
@@ -88,7 +88,7 @@ class MaterialController extends Controller
         $material->delete();
 
         return response()->json([
-            'message' => 'Matériel supprimé avec succès'
+            'message' => 'Matériel supprimé avec succès',
         ]);
     }
 }
