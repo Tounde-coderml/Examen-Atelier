@@ -9,8 +9,6 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE:-Examen_atelier}
       MYSQL_USER: ${DB_USERNAME:-atelier}
       MYSQL_PASSWORD: ${DB_PASSWORD:-password}
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -39,8 +37,6 @@ services:
         condition: service_healthy
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
     networks:
       - atelier_network
 
