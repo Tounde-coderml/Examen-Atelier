@@ -1,0 +1,76 @@
+name: Tests et Build
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Tests PHP et Frontend
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: Examen_atelier
+          MYSQL_USER: atelier
+          MYSQL_PASSWORD: password
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # PHP et Backend
+      - name: Configurer PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo, pdo_mysql, mbstring, bcmath
+          coverage: pcov
+
+      - name: Installer les dépendances Composer
+        run: composer install --no-dev --no-interaction --prefer-dist
+
+      - name: Générer la clé d'application
+        run: php artisan key:generate
+
+      - name: Exécuter les migrations
+        run: php artisan migrate:fresh --seed
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: Examen_atelier
+          DB_USERNAME: atelier
+          DB_PASSWORD: password
+
+      - name: Exécuter les tests
+        run: php artisan test
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: Examen_atelier
+          DB_USERNAME: atelier
+          DB_PASSWORD: password
+
+      # Frontend
+      - name: Configurer Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances npm
+        run: cd frontend && npm ci
+
+      - name: Linter
+        run: cd frontend && npm run lint --if-present
+
+      - name: Build frontend
+        run: cd frontend && npm run build

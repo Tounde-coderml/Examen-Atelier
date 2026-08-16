@@ -1,0 +1,51 @@
+# Backend Laravel - Examen Atelier
+
+FROM php:8.2-fpm
+
+# Installer les dépendances système
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    mysql-client \
+    netcat-traditional \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installer les extensions PHP
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Copier les scripts Docker
+COPY docker/php.ini /usr/local/etc/php/php.ini
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Installer Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers du projet
+COPY . .
+
+# Installer les dépendances Composer
+RUN composer install --no-dev --no-interaction --prefer-dist
+
+# Générer la clé d'application
+RUN php artisan key:generate || true
+
+# Créer les répertoires de stockage
+RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views
+
+# Donner les permissions
+RUN chmod -R 775 storage bootstrap/cache
+
+# Exposer le port
+EXPOSE 8000
+
+# Commande de démarrage
+ENTRYPOINT ["/entrypoint.sh"]
