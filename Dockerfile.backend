@@ -1,6 +1,6 @@
 # Backend Laravel - Examen Atelier
 
-FROM php:8.2-fpm
+FROM php:8.4-cli
 
 # Installer les dépendances système
 RUN apt-get update && apt-get install -y \
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    mysql-client \
+    mariadb-client \
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,8 +34,6 @@ COPY . .
 
 # Installer les dépendances Composer
 RUN composer install --no-dev --no-interaction --prefer-dist
-
-
 
 # Créer les répertoires de stockage
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views
